@@ -12,25 +12,25 @@ public class Model : MonoBehaviour
     [SerializeField]
     private int _debugCurrentHp = 100;
     [SerializeField]
-    private int _debugMaxSp = 50;
+    private int _debugMaxSp = 100;
     [SerializeField]
-    private int _debugCurrentSp = 100;
+    private int _debugCurrentSp = 50;
 
     private readonly ReactiveProperty<int> _maxHp = new();
     public int MaxHp { get => _maxHp.Value; set => _maxHp.Value = value; }
-    public IObservable<int> MaxHpChange => _maxHp;
+    public IObservable<int> MaxHpChanged => _maxHp;
 
     private readonly ReactiveProperty<int> _currentHp = new();
     public int CurrentHp { get => _currentHp.Value; set => _currentHp.Value = value; }
-    public IObservable<int> CurrentHpChange => _currentHp;
+    public IObservable<int> CurrentHpChanged => _currentHp;
 
     private readonly ReactiveProperty<int> _maxSp = new();
     public int MaxSp { get => _maxSp.Value; set => _maxSp.Value = value; }
-    public IObservable<int> MaxSpChange => _maxSp;
+    public IObservable<int> MaxSpChanged => _maxSp;
 
     private readonly ReactiveProperty<int> _currentSp = new();
     public int CurrentSp { get => _currentSp.Value; set => _currentSp.Value = value; }
-    public IObservable<int> CurrentSpChange => _currentSp;
+    public IObservable<int> CurrentSpChanged => _currentSp;
 
     private readonly Subject<int> _spEnpty = new();
     public IObservable<int> SpEnpty => _spEnpty;
@@ -62,6 +62,8 @@ public class Model : MonoBehaviour
             _spEnpty.OnNext(0);
             return;
         }
+
+        _currentSp.Value = nextSp;
 
         int nextHp = _currentHp.Value;
         nextHp += UnityEngine.Random.Range(10, 30);

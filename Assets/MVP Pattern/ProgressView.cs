@@ -35,7 +35,7 @@ public class ProgressView : MonoBehaviour
         else
         {
             _tween = DOTween.To(() => _gaugeSlider.value,
-                value => _gaugeSlider.value = value, newValue, 0.35f);
+                value => _gaugeSlider.value = value, newValue, 1f);
         }
     }
 }

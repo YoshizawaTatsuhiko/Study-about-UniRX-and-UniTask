@@ -18,10 +18,10 @@ public class MessageDialog : MonoBehaviour
     public void ShowDialog()
     {
         gameObject.SetActive(true);
-        _canvasGroup.alpha = 1f;
-        _tween.Kill();
+        if(_canvasGroup) _canvasGroup.alpha = 1f;
+        if(_tween != null) _tween.Kill();
 
-        DOVirtual.
+        _tween = DOVirtual.
             DelayedCall(1f, () => _canvasGroup.DOFade(0f, 1f)).
             OnComplete(() => gameObject.SetActive(false));
     }
