@@ -6,30 +6,30 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     private static SoundManager _instance = null;
-    public static SoundManager Instance
-    {
-        get
-        {
-            if (_instance == null)
-            {
-                _instance = FindObjectOfType<SoundManager>();
+    public static SoundManager Instance => _instance;
 
-                if (_instance == null)
-                {
-                    Debug.LogError($"{_instance} is Nothing");
-                }
-            }
-            return _instance;
-        }
-    }
-
+    [SerializeField]
     private AudioSource _bgmAudio = null;
+    [SerializeField]
     private AudioSource _seAudio = null;
 
     private void Awake()
     {
-        _bgmAudio = gameObject.AddComponent<AudioSource>();
-        _seAudio = gameObject.AddComponent<AudioSource>();
+        if (!_instance)
+        {
+            _instance = this;
+            DontDestroyOnLoad(_instance);
+        }
+        else
+        {
+            Destroy(this);
+        }
+
+        if (!_bgmAudio)
+        {
+            _bgmAudio = gameObject.AddComponent<AudioSource>();
+        }
+        if (!_seAudio) _seAudio = gameObject.AddComponent<AudioSource>();
     }
 
     public float BgmVolume { get => _bgmAudio.volume; set => _bgmAudio.volume = Mathf.Clamp01(value); }

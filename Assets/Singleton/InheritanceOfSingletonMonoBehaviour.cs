@@ -10,5 +10,11 @@ public class InheritanceOfSingletonMonoBehaviour : SingletonMonoBehaviour<Inheri
     private void Awake()
     {
         base.Awake();
+        DebugText();
+    }
+
+    void DebugText()
+    {
+        Debug.Log("Call");
     }
 }
