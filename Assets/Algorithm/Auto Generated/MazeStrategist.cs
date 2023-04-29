@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 日本語対応
-public class MazeStrategist : MonoBehaviour
+public class MazeStrategist
 {
     private IMazeStrategy _strategy = null;
 
@@ -12,10 +12,10 @@ public class MazeStrategist : MonoBehaviour
         _strategy = strategy;
     }
 
-    public void GenerateMaze()
+    public void GenerateMaze(int w, int h)
     {
         Debug.Log($"{_strategy?.GetType()}を実行します。");
-        _strategy.ExecuteBlueprint();
+        _strategy.ExecuteBlueprint(w, h);
     }
 
     public void ChangeStrategy(IMazeStrategy strategy)
