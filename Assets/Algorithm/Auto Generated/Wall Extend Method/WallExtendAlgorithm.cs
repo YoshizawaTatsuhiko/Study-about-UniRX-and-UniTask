@@ -11,7 +11,7 @@ public class WallExtendAlgorithm : Blueprint, IMazeStrategy
     Stack<(int, int)> _currentWall = new Stack<(int, int)>();
 
     /// <summary>迷路を生成する</summary>
-    public string GenerateMaze(int width, int height)
+    public string CreateBlueprint(int width, int height)
     {
         // 縦横の大きさが5未満だったら生成しない。
         if (width < 5 || height < 5) throw new System.ArgumentOutOfRangeException();
@@ -127,10 +127,5 @@ public class WallExtendAlgorithm : Blueprint, IMazeStrategy
     private bool IsCurrentWall(int x, int y)
     {
         return _currentWall.Contains((x, y));
-    }
-
-    public string ExecuteBlueprint(int width, int height)
-    {
-        return GenerateMaze(width, height);
     }
 }
