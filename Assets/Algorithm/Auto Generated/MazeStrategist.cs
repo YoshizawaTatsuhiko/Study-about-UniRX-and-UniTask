@@ -5,9 +5,9 @@ using UnityEngine;
 // 日本語対応
 public class MazeStrategist
 {
-    private IMazeStrategy _strategy = null;
+    private IMazeAlgorithm _strategy = null;
 
-    public MazeStrategist(IMazeStrategy strategy)
+    public MazeStrategist(IMazeAlgorithm strategy)
     {
         _strategy = strategy;
     }
@@ -17,11 +17,11 @@ public class MazeStrategist
     {
         Debug.Log($"{_strategy?.GetType()}を実行します。");
         string[] strArray = _strategy.CreateBlueprint(width, height).Split("\n");
-        string[,] mazeInfo = new string[strArray[0].Length, strArray.Length];
+        string[,] mazeInfo = To2DArray(strArray);
     }
 
-    /// <summary>自動生成アルゴリズムを変更する</summary>
-    public void ChangeTheAssembly(IMazeStrategy strategy)
+    /// <summary>アルゴリズムを変更する</summary>
+    public void ChangeTheAssembly(IMazeAlgorithm strategy)
     {
         Debug.Log($"{_strategy} => {strategy}に切り替えるまで、3 2 1...");
         _strategy = strategy;
