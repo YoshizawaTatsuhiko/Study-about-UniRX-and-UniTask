@@ -1,5 +1,5 @@
 // 日本語対応
-public interface IMazeStrategy
+public interface IMazeAlgorithm
 {
     public abstract string CreateBlueprint(int width, int height);
 }
