@@ -13,11 +13,12 @@ public class MazeStrategist
     }
 
     /// <summary>設計図から迷路を作成する</summary>
-    public void AssembleFromBlueprint(int width, int height)
+    public string[,] AssembleFromBlueprint(int width, int height)
     {
         Debug.Log($"{_strategy?.GetType()}を実行します。");
         string[] strArray = _strategy.CreateBlueprint(width, height).Split("\n");
         string[,] mazeInfo = To2DArray(strArray);
+        return mazeInfo;
     }
 
     /// <summary>アルゴリズムを変更する</summary>
