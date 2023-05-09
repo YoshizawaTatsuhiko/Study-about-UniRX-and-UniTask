@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>生成する度に構造が変化するマップを生成する</summary>
-public class WallExtendAlgorithm : Blueprint, IMazeAlgorithm
+public class WallExtendAlgorithm : Blueprint, IMazeStrategy
 {
     /// <summary>壁生成開始地点</summary>
     List<(int, int)> _startPoint = new List<(int, int)>();

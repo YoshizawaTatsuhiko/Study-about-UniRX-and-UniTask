@@ -5,9 +5,9 @@ using UnityEngine;
 // 日本語対応
 public class MazeStrategist
 {
-    private IMazeAlgorithm _strategy = null;
+    private IMazeStrategy _strategy = null;
 
-    public MazeStrategist(IMazeAlgorithm strategy)
+    public MazeStrategist(IMazeStrategy strategy)
     {
         _strategy = strategy;
     }
@@ -22,7 +22,7 @@ public class MazeStrategist
     }
 
     /// <summary>アルゴリズムを変更する</summary>
-    public void ChangeTheAssembly(IMazeAlgorithm strategy)
+    public void ChangeTheAssembly(IMazeStrategy strategy)
     {
         Debug.Log($"{_strategy} => {strategy}に切り替えるまで、3 2 1...");
         _strategy = strategy;
@@ -30,7 +30,7 @@ public class MazeStrategist
 
     private string[,] To2DArray(string[] array)
     {
-        string[,] twoDimensionalArray = new string[array[0].Length, array.Length];
+        string[,] twoDimensionalArray = new string[array[0].Length, array.Length - 1];
 
         for (int i = 0; i < twoDimensionalArray.GetLength(0); i++)
         {
