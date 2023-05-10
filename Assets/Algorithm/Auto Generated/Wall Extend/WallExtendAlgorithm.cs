@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>生成する度に構造が変化するマップを生成する</summary>
 public class WallExtendAlgorithm : Blueprint, IMazeStrategy
 {
     /// <summary>壁生成開始地点</summary>
@@ -13,12 +12,12 @@ public class WallExtendAlgorithm : Blueprint, IMazeStrategy
     /// <summary>迷路を生成する</summary>
     public string CreateBlueprint(int width, int height)
     {
-        // 縦横の大きさが5未満だったら生成しない。
+        // 迷路の大きさが5未満だったら、エラーを出力する。
         if (width < 5 || height < 5) throw new System.ArgumentOutOfRangeException();
-        // 縦(横)の値が偶数だったら、奇数に変換する。
-        width = width % 2 == 0 ? width + 1 : width;
-        height = height % 2 == 0 ? height + 1 : height;
-
+        // 縦(横)の長さが偶数だったら、奇数に変換する。
+        width = width % 2 == 0 ? ++width : width;
+        height = height % 2 == 0 ? ++height : height;
+        
         // 迷路の情報を格納する。
         string[,] maze = new string[width, height];
 
@@ -35,7 +34,7 @@ public class WallExtendAlgorithm : Blueprint, IMazeStrategy
                 else
                 {
                     maze[x, y] = "F";
-                    // 壁生成開始座標候補をリストに追加する。
+                    // x, y共に偶数の座標をリストに追加する。
                     if (x % 2 == 0 && y % 2 == 0)
                     {
                         _startPoint.Add((x, y));
