@@ -236,8 +236,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71b2006cbbe9c384c9dcb3d77e613d69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _width: 50
-  _height: 50
+  _width: 10
+  _height: 10
   _wall: {fileID: 781617342953952637, guid: b7a836ae664fa8b46af7305dc19c8373, type: 3}
   _floor: {fileID: 7219468720634440013, guid: 52a1ea148aa93d24e824976d4e794e9f, type: 3}
   _algorithm: 1

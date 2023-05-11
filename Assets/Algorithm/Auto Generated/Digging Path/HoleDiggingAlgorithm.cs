@@ -57,6 +57,14 @@ public class HoleDiggingAlgorithm : Blueprint, IMazeStrategy
         int y = list[index].Item2;
         list.Remove(list[index]);
 
+        while (true)
+        {
+            List<string> dirs = new List<string>();
 
+            if (maze[x, y - 1] == "W" && maze[x, y - 2] == "W") dirs.Add("Up");
+            if (maze[x, y + 1] == "W" && maze[x, y + 2] == "W") dirs.Add("Down");
+            if (maze[x - 1, y] == "W" && maze[x - 2, y] == "W") dirs.Add("Left");
+            if (maze[x + 1, y] == "W" && maze[x + 2, y] == "W") dirs.Add("Right");
+        }
     }
 }
