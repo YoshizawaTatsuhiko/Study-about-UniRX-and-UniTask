@@ -65,6 +65,20 @@ public class HoleDiggingAlgorithm : Blueprint, IMazeStrategy
             if (maze[x, y + 1] == "W" && maze[x, y + 2] == "W") dirs.Add("Down");
             if (maze[x - 1, y] == "W" && maze[x - 2, y] == "W") dirs.Add("Left");
             if (maze[x + 1, y] == "W" && maze[x + 2, y] == "W") dirs.Add("Right");
+
+            if(dirs.Count == 0) break;
+
+
+        }
+    }
+
+    private void SetPath(string[,] maze, int x, int y)
+    {
+        maze[x, y] = "F";
+
+        if (x % 2 != 0 && y % 2 != 0)
+        {
+            _startList.Remove((x, y));
         }
     }
 }
