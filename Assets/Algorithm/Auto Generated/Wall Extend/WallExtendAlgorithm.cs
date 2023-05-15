@@ -98,7 +98,7 @@ public class WallExtendAlgorithm : Blueprint, IMazeStrategy
             }
             catch (System.Exception e)
             {
-                Debug.Log(e.ToString());
+                Debug.Log(e.Message);
             }
         }
         // 拡張できるポイントがまだあったら拡張を続ける。

@@ -10,7 +10,7 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField] private GameObject _wall = null;
     [SerializeField] private GameObject _floor = null;
     [SerializeField] private SelectAlgorithm _algorithm = SelectAlgorithm.None;
-    MazeStrategist _autoAlgorithm = new(new WallExtendAlgorithm());
+    MazeStrategist _autoAlgorithm = null;
 
     private void Start()
     {
@@ -22,7 +22,10 @@ public class MazeGenerator : MonoBehaviour
         switch (algorithm)
         {
             case SelectAlgorithm.WallExtend:
-                _autoAlgorithm.ChangeTheAssembly(new WallExtendAlgorithm());
+                _autoAlgorithm = new(new WallExtendAlgorithm());
+                break;
+            case SelectAlgorithm.HoleDigging:
+                _autoAlgorithm = new(new HoleDiggingAlgorithm());
                 break;
             default:
                 break;
@@ -33,22 +36,22 @@ public class MazeGenerator : MonoBehaviour
         GameObject floorParent = new GameObject("FloorParant");
         floorParent.transform.SetParent(transform);
 
-        for (int i = 0; i < string2DArray.GetLength(0); i++)
+        for (int z = 0; z < string2DArray.GetLength(1); z++)
         {
-            for (int j = 0; j < string2DArray.GetLength(1); j++)
+            for (int x = 0; x < string2DArray.GetLength(0); x++)
             {
-                string chara = string2DArray[i, j];
+                string chara = string2DArray[x, z];
 
                 if (chara == "W")
                 {
                     Instantiate(_wall, new Vector3
-                        (i - _width / 2, transform.position.y, j - _height / 2),
+                        (x - _width / 2, transform.position.y, z - _height / 2),
                         Quaternion.identity, wallParent.transform);
                 }
                 else if (chara == "F")
                 {
                     Instantiate(_floor, new Vector3
-                        (i - _width / 2, transform.position.y - _wall.transform.localScale.y / 2, j - _height / 2),
+                        (x - _width / 2, transform.position.y - _wall.transform.localScale.y / 2, z - _height / 2),
                         Quaternion.identity, floorParent.transform);
                 }
             }
@@ -59,5 +62,6 @@ public class MazeGenerator : MonoBehaviour
     {
         None,
         WallExtend,
+        HoleDigging,
     }
 }
