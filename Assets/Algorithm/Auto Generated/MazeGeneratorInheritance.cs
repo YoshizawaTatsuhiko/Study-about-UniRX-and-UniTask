@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 日本語対応
-public class MazeGenerator : MonoBehaviour
+public class MazeGeneratorInheritance : MonoBehaviour
 {
     [SerializeField] private int _width = 5;
     [SerializeField] private int _height = 5;
     [SerializeField] private GameObject _wall = null;
     [SerializeField] private GameObject _floor = null;
     [SerializeField] private SelectAlgorithm _algorithm = SelectAlgorithm.None;
-    MazeStrategist _autoAlgorithm = null;
+    Blueprint _autoAlgorithm = null;
 
     private void Start()
     {
@@ -19,18 +19,13 @@ public class MazeGenerator : MonoBehaviour
 
     private void GenerateMaze(SelectAlgorithm algorithm)
     {
-        switch (algorithm)
+        _autoAlgorithm = algorithm switch
         {
-            case SelectAlgorithm.WallExtend:
-                _autoAlgorithm = new(new WallExtendAlgorithm());
-                break;
-            case SelectAlgorithm.HoleDigging:
-                _autoAlgorithm = new(new HoleDiggingAlgorithm());
-                break;
-            default:
-                break;
-        }
-        string[,] string2DArray = _autoAlgorithm.AssembleFromBlueprint(_width, _height);
+            SelectAlgorithm.HoleDigging => new HoleDigging(),
+            SelectAlgorithm.WallExtend => new WallExtend(),
+            _ => null
+        };
+        string[,] string2DArray = _autoAlgorithm.AssembleMaze(_width, _height);
         GameObject wallParent = new GameObject("WallParant");
         wallParent.transform.SetParent(transform);
         GameObject floorParent = new GameObject("FloorParant");
@@ -61,7 +56,7 @@ public class MazeGenerator : MonoBehaviour
     private enum SelectAlgorithm
     {
         None,
-        WallExtend,
         HoleDigging,
+        WallExtend,
     }
 }
