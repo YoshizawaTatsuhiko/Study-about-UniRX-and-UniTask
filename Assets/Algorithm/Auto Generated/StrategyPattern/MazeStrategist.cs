@@ -17,12 +17,11 @@ public class MazeStrategist
     {
         Debug.Log($"{_strategy?.GetType()}を実行します。");
         string[] strArray = _strategy.CreateBlueprint(width, height).Split("\n");
-        string[,] mazeInfo = To2DArray(strArray);
-        return mazeInfo;
+        return To2DArray(strArray);
     }
 
     /// <summary>アルゴリズムを変更する</summary>
-    public void ChangeTheAssembly(IMazeStrategy strategy)
+    public void ChangeAlgorithm(IMazeStrategy strategy)
     {
         Debug.Log($"{_strategy} => {strategy}に切り替えるまで、3 2 1...");
         _strategy = strategy;
