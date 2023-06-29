@@ -25,10 +25,7 @@ public class SoundManager : MonoBehaviour
             Destroy(this);
         }
 
-        if (!_bgmAudio)
-        {
-            _bgmAudio = gameObject.AddComponent<AudioSource>();
-        }
+        if (!_bgmAudio) _bgmAudio = gameObject.AddComponent<AudioSource>();
         if (!_seAudio) _seAudio = gameObject.AddComponent<AudioSource>();
     }
 
