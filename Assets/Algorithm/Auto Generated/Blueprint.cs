@@ -1,9 +1,16 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 // 日本語対応
 public class Blueprint
 {
     public virtual string[,] AssembleMaze(int width, int height)
+    {
+        return null;
+    }
+
+    public virtual T[,] GenericAssembleMaze<T>(int width, int height, T wall, T path)
     {
         return null;
     }
