@@ -4,6 +4,7 @@ using System.Collections.Generic;
 // 日本語対応
 public class HoleDiggingGeneric : Blueprint
 {
+    /// <summary>通路拡張開始地点候補</summary>
     private List<(int, int)> _startList = new List<(int, int)>();
     private Random _random = new();
 
@@ -34,12 +35,7 @@ public class HoleDiggingGeneric : Blueprint
                 }
             }
         }
-
-
-
-
-
-
+        DiggingPath(maze, (1, 1), wall, path);
 
         for (int y = 0; y < height; y++)
         {
@@ -54,7 +50,7 @@ public class HoleDiggingGeneric : Blueprint
         return maze;
     }
 
-    private void DiggingPath(string[,] maze, (int, int) coodinate)
+    private void DiggingPath<T>(T[,] maze, (int, int) coodinate, T wall, T path)
     {
         if (_startList.Count > 0) _startList.Remove(coodinate);
 
@@ -64,41 +60,42 @@ public class HoleDiggingGeneric : Blueprint
         while (true)
         {
             // 拡張できる方向を格納するリスト
-            List<string> dirs = new List<string>();
+            List<Direction> dirs = new();
 
-            if (maze[x, y - 1] == "W" && maze[x, y - 2] == "W") dirs.Add("Up");
-            if (maze[x, y + 1] == "W" && maze[x, y + 2] == "W") dirs.Add("Down");
-            if (maze[x - 1, y] == "W" && maze[x - 2, y] == "W") dirs.Add("Left");
-            if (maze[x + 1, y] == "W" && maze[x + 2, y] == "W") dirs.Add("Right");
+            //if (maze[x, y - 1] == wall && maze[x, y - 2] == wall) dirs.Add(Direction.UP);
+            //if (maze[x, y + 1] == wall && maze[x, y + 2] == wall) dirs.Add(Direction.DOWN);
+            //if (maze[x - 1, y] == wall && maze[x - 2, y] == wall) dirs.Add(Direction.LEFT);
+            //if (maze[x + 1, y] == wall && maze[x + 2, y] == wall) dirs.Add(Direction.RIGHT);
+
             // 拡張できる方向がなくなったら、ループを抜ける。
             if (dirs.Count == 0) break;
             // 通路を設置する
-            SetPath(maze, x, y);
+            SetPath(maze, x, y, path);
             int dirsIndex = _random.Next(0, dirs.Count);
 
             try
             {
                 switch (dirs[dirsIndex])
                 {
-                    case "Up":
-                        SetPath(maze, x, --y);
-                        SetPath(maze, x, --y);
+                    case Direction.UP:
+                        SetPath(maze, x, --y, path);
+                        SetPath(maze, x, --y, path);
                         break;
-                    case "Down":
-                        SetPath(maze, x, ++y);
-                        SetPath(maze, x, ++y);
+                    case Direction.DOWN:
+                        SetPath(maze, x, ++y, path);
+                        SetPath(maze, x, ++y, path);
                         break;
-                    case "Left":
-                        SetPath(maze, --x, y);
-                        SetPath(maze, --x, y);
+                    case Direction.LEFT:
+                        SetPath(maze, --x, y, path);
+                        SetPath(maze, --x, y, path);
                         break;
-                    case "Right":
-                        SetPath(maze, ++x, y);
-                        SetPath(maze, ++x, y);
+                    case Direction.RIGHT:
+                        SetPath(maze, ++x, y, path);
+                        SetPath(maze, ++x, y, path);
                         break;
                 }
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
@@ -107,17 +104,25 @@ public class HoleDiggingGeneric : Blueprint
         if (_startList.Count > 0)
         {
             int random = _random.Next(0, _startList.Count);
-            DiggingPath(maze, _startList[random]);
+            DiggingPath(maze, _startList[random], wall, path);
         }
     }
 
-    private void SetPath(string[,] maze, int x, int y)
+    private void SetPath<T>(T[,] maze, int x, int y, T path)
     {
-        maze[x, y] = "F";
+        maze[x, y] = path;
         // x, yが共に奇数だったら、リストから削除する。
         if (x % 2 != 0 && y % 2 != 0)
         {
             _startList.Add((x, y));
         }
+    }
+
+    private enum Direction : byte
+    {
+        UP      = 0,
+        DOWN    = 1,
+        LEFT    = 2,
+        RIGHT   = 4,
     }
 }

@@ -1,6 +1,6 @@
+using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 // 日本語対応
 public class Blueprint
