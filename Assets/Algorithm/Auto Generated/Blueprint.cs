@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using UnityEngine;
 
 // 日本語対応
 public class Blueprint
@@ -10,7 +8,7 @@ public class Blueprint
         return null;
     }
 
-    public virtual T[,] GenericAssembleMaze<T>(int width, int height, T wall, T path)
+    public virtual T[,] GenericAssembleMaze<T>(int width, int height, T wall, T path) where T : IEquatable<T>
     {
         return null;
     }
@@ -30,7 +28,6 @@ public class Blueprint
             }
             if (i < maze.Length - 1) str += "\n";
         }
-        Debug.Log(str);
         return str;
     }
 }

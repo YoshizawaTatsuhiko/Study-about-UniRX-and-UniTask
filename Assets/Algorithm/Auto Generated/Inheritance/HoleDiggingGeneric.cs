@@ -50,7 +50,7 @@ public class HoleDiggingGeneric : Blueprint
         return maze;
     }
 
-    private void DiggingPath<T>(T[,] maze, (int, int) coodinate, T wall, T path)
+    private void DiggingPath<T>(T[,] maze, (int, int) coodinate, T wall, T path) where T : IEquatable<T>
     {
         if (_startList.Count > 0) _startList.Remove(coodinate);
 
@@ -62,10 +62,10 @@ public class HoleDiggingGeneric : Blueprint
             // 拡張できる方向を格納するリスト
             List<Direction> dirs = new();
 
-            //if (maze[x, y - 1] == wall && maze[x, y - 2] == wall) dirs.Add(Direction.UP);
-            //if (maze[x, y + 1] == wall && maze[x, y + 2] == wall) dirs.Add(Direction.DOWN);
-            //if (maze[x - 1, y] == wall && maze[x - 2, y] == wall) dirs.Add(Direction.LEFT);
-            //if (maze[x + 1, y] == wall && maze[x + 2, y] == wall) dirs.Add(Direction.RIGHT);
+            if (maze[x, y - 1].Equals(wall) && maze[x, y - 2].Equals(wall)) dirs.Add(Direction.UP);
+            if (maze[x, y + 1].Equals(wall) && maze[x, y + 2].Equals(wall)) dirs.Add(Direction.DOWN);
+            if (maze[x - 1, y].Equals(wall) && maze[x - 2, y].Equals(wall)) dirs.Add(Direction.LEFT);
+            if (maze[x + 1, y].Equals(wall) && maze[x + 2, y].Equals(wall)) dirs.Add(Direction.RIGHT);
 
             // 拡張できる方向がなくなったら、ループを抜ける。
             if (dirs.Count == 0) break;
