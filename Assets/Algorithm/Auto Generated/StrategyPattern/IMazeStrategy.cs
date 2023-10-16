@@ -1,5 +1,8 @@
 // 日本語対応
-public interface IMazeStrategy
+namespace Strategy
 {
-    public abstract string CreateBlueprint(int width, int height);
+    public interface IMazeStrategy
+    {
+        public abstract string CreateBlueprint(int width, int height);
+    }
 }
