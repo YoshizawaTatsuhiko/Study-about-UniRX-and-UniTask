@@ -1,18 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // 日本語対応
 namespace MessagePipe.Sample
 {
+    /// <summary>入力の情報を受け付ける</summary>
     public struct InputParam
     {
-        public bool IsJump { get; }
+        public bool CanJump { get; }
         public Vector3 Move { get; }
 
-        public InputParam(bool isJump, Vector3 move)
+        public InputParam(bool canJump, Vector3 move)
         {
-            IsJump = isJump;
+            CanJump = canJump;
             Move = move;
         }
     }
