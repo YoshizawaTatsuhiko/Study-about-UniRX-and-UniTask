@@ -3,18 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 日本語対応
-public class InheritanceOfSingletonMonoBehaviour : SingletonMonoBehaviour<InheritanceOfSingletonMonoBehaviour>
+namespace Learning.Singleton
 {
-    // SingletonMonoBehaviourを継承したクラスでAwake()を使いたいときは、
-    // 基底クラスのAwake()を呼んでおく必要がある。
-    private void Awake()
+    public class InheritanceOfSingletonMonoBehaviour : SingletonMonoBehaviour<InheritanceOfSingletonMonoBehaviour>
     {
-        base.Awake();
-        DebugText();
-    }
+        // SingletonMonoBehaviourを継承したクラスでAwake()を使いたいときは、
+        // 基底クラスのAwake()を呼んでおく必要がある。
+        private void Awake()
+        {
+            base.Awake();
+            DebugText();
+        }
 
-    void DebugText()
-    {
-        Debug.Log("Call");
+        void DebugText()
+        {
+            Debug.Log("Call");
+        }
     }
 }
