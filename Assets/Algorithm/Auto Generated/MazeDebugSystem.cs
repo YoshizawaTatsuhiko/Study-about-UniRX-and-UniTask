@@ -1,18 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 // 日本語対応
-public class MazeDebugSystem : MonoBehaviour
+namespace Learning.Algorithm
 {
-    [SerializeField] private KeyCode _keycode = KeyCode.None;
-
-    private void Update()
+    public class MazeDebugSystem : MonoBehaviour
     {
-        if (Input.GetKeyDown(_keycode))
+        [SerializeField] private KeyCode _keycode = KeyCode.None;
+
+        private void Update()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            if (Input.GetKeyDown(_keycode))
+            {
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            }
         }
     }
 }
