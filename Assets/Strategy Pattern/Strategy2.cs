@@ -1,12 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // 日本語対応
-public class Strategy2 : IStrategy
+namespace Learning.StrategyPattern
 {
-    public void Strategy()
+    public class Strategy2 : IStrategy
     {
-        Debug.Log("私の名前は「ごめんなさい」です");
+        public void Strategy()
+        {
+            Debug.Log("私の名前は「ごめんなさい」です");
+        }
     }
 }

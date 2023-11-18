@@ -1,5 +1,5 @@
 // 日本語対応
-namespace Strategy
+namespace Learning.StrategyPattern
 {
     public interface IMazeStrategy
     {

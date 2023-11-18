@@ -1,4 +1,7 @@
-public interface IStrategy
+namespace Learning.StrategyPattern
 {
-    public void Strategy();
+    public interface IStrategy
+    {
+        public void Strategy();
+    }
 }

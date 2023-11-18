@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // 日本語対応
-namespace Strategy
+namespace Learning.StrategyPattern
 {
     public class MazeGeneratorStrategyPattern : MonoBehaviour
     {

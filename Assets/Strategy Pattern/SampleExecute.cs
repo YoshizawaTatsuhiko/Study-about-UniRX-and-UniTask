@@ -1,16 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // 日本語対応
-public class SampleExecute : MonoBehaviour
+namespace Learning.StrategyPattern
 {
-    private StrategyPattern _strategy = new(new Strategy1());
-
-    private void Start()
+    public class SampleExecute : MonoBehaviour
     {
-        _strategy.ExecuteStrategy();
-        _strategy.ChangeStrategy(new Strategy2());
-        _strategy.ExecuteStrategy();
+        private Strategy _strategy = new(new Strategy1());
+
+        private void Start()
+        {
+            _strategy.ExecuteStrategy();
+            _strategy.ChangeStrategy(new Strategy2());
+            _strategy.ExecuteStrategy();
+        }
     }
 }
