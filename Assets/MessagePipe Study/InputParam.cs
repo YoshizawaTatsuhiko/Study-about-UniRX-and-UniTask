@@ -1,7 +1,7 @@
 using UnityEngine;
 
 // 日本語対応
-namespace MessagePipe.Sample
+namespace Learning.MessagePipe
 {
     /// <summary>入力の情報を受け付ける</summary>
     public struct InputParam

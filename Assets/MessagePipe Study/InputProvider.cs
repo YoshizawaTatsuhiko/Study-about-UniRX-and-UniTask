@@ -1,8 +1,9 @@
+using MessagePipe;
 using UnityEngine;
 using VContainer.Unity;
 
 // 日本語対応
-namespace MessagePipe.Sample
+namespace Learning.MessagePipe
 {
     public sealed class InputProvider : ITickable
     {

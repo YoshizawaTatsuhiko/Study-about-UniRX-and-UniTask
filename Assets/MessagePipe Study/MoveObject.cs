@@ -4,7 +4,7 @@ using UnityEngine;
 using VContainer;
 
 // 日本語対応
-namespace MessagePipe.Sample
+namespace Learning.MessagePipe
 {
     [RequireComponent(typeof(CharacterController))]
     public class MoveObject : MonoBehaviour
