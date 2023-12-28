@@ -1,6 +1,5 @@
 using UnityEngine;
 
-// 日本語対応
 [System.Serializable]
 public class PlayerInput
 {

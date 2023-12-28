@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class TestPlayer : MonoBehaviour
+public class PlayerTemplate : MonoBehaviour
 {
     [SerializeField] private PlayerInput _input = new PlayerInput();
     [SerializeField] private float _moveSpeed = 5.0f;
