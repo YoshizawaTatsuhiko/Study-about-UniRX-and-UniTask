@@ -4,12 +4,12 @@ using UnityEngine;
 // 日本語対応
 namespace Learning.Algorithm.FlowField
 {
-    public class DebugGrid : MonoBehaviour
+    public class GridDebug : MonoBehaviour
     {
-        public GridController gridController;
-        public bool displayGrid;
+        [SerializeField] private GridController gridController;
+        [SerializeField] private bool displayGrid;
 
-        public FlowFieldDisplayType curDisplayType;
+        [SerializeField] private FlowFieldDisplayType curDisplayType;
 
         private Vector2Int gridSize;
         private float cellRadius;
@@ -22,12 +22,12 @@ namespace Learning.Algorithm.FlowField
         //    ffIcons = Resources.LoadAll<Sprite>("Sprites/FFicons");
         //}
 
-        //public void SetFlowField(FlowField newFlowField)
-        //{
-        //    curFlowField = newFlowField;
-        //    cellRadius = newFlowField.cellRadius;
-        //    gridSize = newFlowField.gridSize;
-        //}
+        public void SetFlowField(FlowField newFlowField)
+        {
+            curFlowField = newFlowField;
+            cellRadius = newFlowField.CellRadius;
+            gridSize = newFlowField.GridSize;
+        }
 
         //public void DrawFlowField()
         //{
@@ -150,52 +150,54 @@ namespace Learning.Algorithm.FlowField
             {
                 if (curFlowField == null)
                 {
-                    DrawGrid(gridController.gridSize, Color.yellow, gridController.cellRadius);
+                    DrawGrid(gridController.GridSize, Color.white, gridController.CellRadius);
                 }
                 else
                 {
-                    DrawGrid(gridSize, Color.green, cellRadius);
+                    DrawGrid(gridSize, Color.red, cellRadius);
                 }
             }
 
-            //    if (curFlowField == null) { return; }
+            if (curFlowField == null) { return; }
 
-            //    GUIStyle style = new GUIStyle(GUI.skin.label);
-            //    style.alignment = TextAnchor.MiddleCenter;
+            GUIStyle style = new GUIStyle(GUI.skin.label);
+            style.alignment = TextAnchor.MiddleCenter;
 
-            //    switch (curDisplayType)
-            //    {
-            //        case FlowFieldDisplayType.CostField:
+            switch (curDisplayType)
+            {
+                case FlowFieldDisplayType.CostField:
 
-            //            foreach (Cell curCell in curFlowField.grid)
-            //            {
-            //                Handles.Label(curCell.worldPos, curCell.cost.ToString(), style);
-            //            }
-            //            break;
+                    foreach (Cell curCell in curFlowField.Grid)
+                    {
+                        Handles.Label(curCell.WorldPos, curCell.Cost.ToString(), style);
+                    }
+                    break;
 
-            //        case FlowFieldDisplayType.IntegrationField:
+                //case FlowFieldDisplayType.IntegrationField:
 
-            //            foreach (Cell curCell in curFlowField.grid)
-            //            {
-            //                Handles.Label(curCell.worldPos, curCell.bestCost.ToString(), style);
-            //            }
-            //            break;
+                //    foreach (Cell curCell in curFlowField.grid)
+                //    {
+                //        Handles.Label(curCell.worldPos, curCell.bestCost.ToString(), style);
+                //    }
+                //    break;
 
-            //        default:
-            //            break;
-            //    }
-
+                default:
+                    break;
+            }
         }
 
         private void DrawGrid(Vector2Int drawGridSize, Color drawColor, float drawCellRadius)
         {
             Gizmos.color = drawColor;
-            for (int x = 0; x < drawGridSize.x; x++)
+
+            for (int y = 0; y < drawGridSize.y; y++)
             {
-                for (int y = 0; y < drawGridSize.y; y++)
+                for (int x = 0; x < drawGridSize.x; x++)
                 {
-                    Vector3 center = new Vector3(drawCellRadius * 2 * x + drawCellRadius, 0, drawCellRadius * 2 * y + drawCellRadius);
-                    Vector3 size = Vector3.one * drawCellRadius * 2;
+                    Vector3 center = new Vector3(
+                        drawCellRadius * 2f * x + drawCellRadius, 0f, drawCellRadius * 2f * -y - drawCellRadius);
+                    center += new Vector3(drawGridSize.x / -2f, 0f, drawGridSize.y / 2f);
+                    Vector3 size = Vector3.one * drawCellRadius * 2f;
                     Gizmos.DrawWireCube(center, size);
                 }
             }
