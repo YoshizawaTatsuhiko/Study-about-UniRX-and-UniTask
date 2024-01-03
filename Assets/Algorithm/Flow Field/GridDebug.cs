@@ -150,11 +150,11 @@ namespace Learning.Algorithm.FlowField
             {
                 if (curFlowField == null)
                 {
-                    DrawGrid(gridController.GridSize, Color.white, gridController.CellRadius);
+                    DrawGrid(gridController.GridSize, Color.yellow, gridController.CellRadius);
                 }
                 else
                 {
-                    DrawGrid(gridSize, Color.red, cellRadius);
+                    DrawGrid(gridSize, Color.green, cellRadius);
                 }
             }
 
@@ -210,6 +210,6 @@ namespace Learning.Algorithm.FlowField
         AllIcon,
         DestinationIcon,
         CostField,
-        IntField,
+        IntegrationField,
     }
 }
