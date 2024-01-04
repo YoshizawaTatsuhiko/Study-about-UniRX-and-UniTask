@@ -29,7 +29,8 @@ namespace Learning.Algorithm.FlowField
 
                 _curFlowField.CreateCostField();
 
-                Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10f);
+                //Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10f);
+                Vector3 mousePos = Input.mousePosition;
                 Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
                 Cell destinationCell = _curFlowField.GetCellFromWorldPos(worldMousePos);
                 _curFlowField.CreateIntegrationField(destinationCell);

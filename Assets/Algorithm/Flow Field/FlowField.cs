@@ -10,9 +10,9 @@ namespace Learning.Algorithm.FlowField
         public Cell[,] Grid { get; private set; } = null;
         public Vector2Int GridSize { get; private set; } = Vector2Int.zero;
         public float CellRadius { get; private set; } = 0.0f;
-        public Cell destinationCell;
 
         private float _cellDiameter = 0.0f;
+        private Cell _destinationCell = null;
 
         public FlowField(float _cellRadius, Vector2Int _gridSize)
         {
@@ -62,16 +62,16 @@ namespace Learning.Algorithm.FlowField
             }
         }
 
-        public void CreateIntegrationField(Cell _destinationCell)
+        public void CreateIntegrationField(Cell destinationCell)
         {
-            destinationCell = _destinationCell;
+            _destinationCell = destinationCell;
 
-            destinationCell.Cost = 0;
-            destinationCell.BestCost = 0;
+            _destinationCell.Cost = 0;
+            _destinationCell.BestCost = 0;
 
             Queue<Cell> cellsToCheck = new Queue<Cell>();
 
-            cellsToCheck.Enqueue(destinationCell);
+            cellsToCheck.Enqueue(_destinationCell);
 
             while (cellsToCheck.Count > 0)
             {
@@ -131,8 +131,10 @@ namespace Learning.Algorithm.FlowField
             {
                 return null;
             }
-
-            else { return Grid[finalPos.x, finalPos.y]; }
+            else
+            {
+                return Grid[finalPos.x, finalPos.y];
+            }
         }
 
         public Cell GetCellFromWorldPos(Vector3 worldPos)
