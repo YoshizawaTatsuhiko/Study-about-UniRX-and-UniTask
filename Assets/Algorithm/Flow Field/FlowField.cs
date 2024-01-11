@@ -1,18 +1,16 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 日本語対応
 namespace Learning.Algorithm.FlowField
 {
     public class FlowField
     {
-        public Cell[,] Grid { get; private set; } = null;
-        public Vector2Int GridSize { get; private set; } = Vector2Int.zero;
-        public float CellRadius { get; private set; } = 0.0f;
+        public Cell[,] Grid { get; private set; }
+        public Vector2Int GridSize { get; private set; }
+        public float CellRadius { get; private set; }
+        public Cell DestinationCell { get; private set; }
 
-        private float _cellDiameter = 0.0f;
-        private Cell _destinationCell = null;
+        private float _cellDiameter;
 
         public FlowField(float _cellRadius, Vector2Int _gridSize)
         {
@@ -23,15 +21,14 @@ namespace Learning.Algorithm.FlowField
 
         public void CreateGrid()
         {
-            Grid = new Cell[GridSize.y, GridSize.x];
+            Grid = new Cell[GridSize.x, GridSize.y];
 
-            for (int y = 0; y < GridSize.y; y++)
+            for (int x = 0; x < GridSize.x; x++)
             {
-                for (int x = 0; x < GridSize.x; x++)
+                for (int y = 0; y < GridSize.y; y++)
                 {
-                    Vector3 worldPos = new Vector3(_cellDiameter * x + CellRadius, 0, _cellDiameter * -y - CellRadius);
-                    worldPos += new Vector3(GridSize.x / -2f, 0f, GridSize.y / 2f);
-                    Grid[y, x] = new Cell(worldPos, new Vector2Int(y, x));
+                    Vector3 worldPos = new Vector3(_cellDiameter * x + CellRadius, 0, _cellDiameter * y + CellRadius);
+                    Grid[x, y] = new Cell(worldPos, new Vector2Int(x, y));
                 }
             }
         }
@@ -40,12 +37,10 @@ namespace Learning.Algorithm.FlowField
         {
             Vector3 cellHalfExtents = Vector3.one * CellRadius;
             int terrainMask = LayerMask.GetMask("Impassible", "RoughTerrain");
-
             foreach (Cell curCell in Grid)
             {
                 Collider[] obstacles = Physics.OverlapBox(curCell.WorldPos, cellHalfExtents, Quaternion.identity, terrainMask);
                 bool hasIncreasedCost = false;
-
                 foreach (Collider col in obstacles)
                 {
                     if (col.gameObject.layer == 6)
@@ -62,16 +57,16 @@ namespace Learning.Algorithm.FlowField
             }
         }
 
-        public void CreateIntegrationField(Cell destinationCell)
+        public void CreateIntegrationField(Cell _destinationCell)
         {
-            _destinationCell = destinationCell;
+            DestinationCell = _destinationCell;
 
-            _destinationCell.Cost = 0;
-            _destinationCell.BestCost = 0;
+            DestinationCell.Cost = 0;
+            DestinationCell.BestCost = 0;
 
             Queue<Cell> cellsToCheck = new Queue<Cell>();
 
-            cellsToCheck.Enqueue(_destinationCell);
+            cellsToCheck.Enqueue(DestinationCell);
 
             while (cellsToCheck.Count > 0)
             {
@@ -89,24 +84,24 @@ namespace Learning.Algorithm.FlowField
             }
         }
 
-        //public void CreateFlowField()
-        //{
-        //    foreach (Cell curCell in grid)
-        //    {
-        //        List<Cell> curNeighbors = GetNeighborCells(curCell.gridIndex, GridDirection.AllDirections);
+        public void CreateFlowField()
+        {
+            foreach (Cell curCell in Grid)
+            {
+                List<Cell> curNeighbors = GetNeighborCells(curCell.GridIndex, GridDirection.AllDirections);
 
-        //        int bestCost = curCell.bestCost;
+                int bestCost = curCell.BestCost;
 
-        //        foreach (Cell curNeighbor in curNeighbors)
-        //        {
-        //            if (curNeighbor.bestCost < bestCost)
-        //            {
-        //                bestCost = curNeighbor.bestCost;
-        //                curCell.bestDirection = GridDirection.GetDirectionFromV2I(curNeighbor.gridIndex - curCell.gridIndex);
-        //            }
-        //        }
-        //    }
-        //}
+                foreach (Cell curNeighbor in curNeighbors)
+                {
+                    if (curNeighbor.BestCost < bestCost)
+                    {
+                        bestCost = curNeighbor.BestCost;
+                        curCell.BestDirection = GridDirection.GetDirectionFromV2I(curNeighbor.GridIndex - curCell.GridIndex);
+                    }
+                }
+            }
+        }
 
         private List<Cell> GetNeighborCells(Vector2Int nodeIndex, List<GridDirection> directions)
         {
@@ -131,10 +126,8 @@ namespace Learning.Algorithm.FlowField
             {
                 return null;
             }
-            else
-            {
-                return Grid[finalPos.x, finalPos.y];
-            }
+
+            else { return Grid[finalPos.x, finalPos.y]; }
         }
 
         public Cell GetCellFromWorldPos(Vector3 worldPos)
@@ -151,4 +144,3 @@ namespace Learning.Algorithm.FlowField
         }
     }
 }
-

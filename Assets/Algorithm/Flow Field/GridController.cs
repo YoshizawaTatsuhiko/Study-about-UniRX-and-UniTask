@@ -1,43 +1,40 @@
 using UnityEngine;
 
-// 日本語対応
 namespace Learning.Algorithm.FlowField
 {
     public class GridController : MonoBehaviour
     {
         public Vector2Int GridSize => _gridSize;
         public float CellRadius => _cellRadius;
+        public FlowField CurFlowField { get; private set; }
 
-        [SerializeField] private Vector2Int _gridSize = Vector2Int.zero;
+        [SerializeField] private Vector2Int _gridSize;
         [SerializeField] private float _cellRadius = 0.5f;
-        [SerializeField] private GridDebug gridDebug = null;
-
-        private FlowField _curFlowField = null;
+        [SerializeField] private GridDebug _gridDebug;
 
         private void InitializeFlowField()
         {
-            _curFlowField = new FlowField(_cellRadius, _gridSize);
-            _curFlowField.CreateGrid();
-            gridDebug.SetFlowField(_curFlowField);
+            CurFlowField = new FlowField(CellRadius, GridSize);
+            CurFlowField.CreateGrid();
+            _gridDebug.SetFlowField(CurFlowField);
         }
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0)) // LeftClick
+            if (Input.GetMouseButtonDown(0))
             {
                 InitializeFlowField();
 
-                _curFlowField.CreateCostField();
+                CurFlowField.CreateCostField();
 
-                //Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10f);
-                Vector3 mousePos = Input.mousePosition;
+                Vector3 mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 10f);
                 Vector3 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
-                Cell destinationCell = _curFlowField.GetCellFromWorldPos(worldMousePos);
-                _curFlowField.CreateIntegrationField(destinationCell);
+                Cell destinationCell = CurFlowField.GetCellFromWorldPos(worldMousePos);
+                CurFlowField.CreateIntegrationField(destinationCell);
 
-                //_curFlowField.CreateFlowField();
+                CurFlowField.CreateFlowField();
 
-                //gridDebug.DrawFlowField();
+                _gridDebug.DrawFlowField();
             }
         }
     }

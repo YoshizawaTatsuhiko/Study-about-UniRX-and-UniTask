@@ -1,14 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-// 日本語対応
 namespace Learning.Algorithm.FlowField
 {
     public class GridDirection
     {
-        public readonly Vector2Int Vector;
+        public Vector2Int Vector { get; private set; }
 
         private GridDirection(int x, int y)
         {
