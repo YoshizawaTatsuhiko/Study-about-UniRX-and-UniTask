@@ -10,7 +10,7 @@ namespace Learning.Algorithm.FlowField
         [SerializeField] private GridController _gridController;
         [SerializeField] private bool _displayGrid;
         [SerializeField] private FlowFieldDisplayType _curDisplayType;
-        [SerializeField] private Sprite[] _ffIcons;
+        [SerializeField] private Sprite[] _ffIcons = new Sprite[3];
 
         private Vector2Int _gridSize;
         private float _cellRadius;
@@ -18,7 +18,7 @@ namespace Learning.Algorithm.FlowField
 
         private void Start()
         {
-            _ffIcons = Resources.LoadAll<Sprite>("Sprites/FFicons");
+            //_ffIcons = Resources.LoadAll<Sprite>("Sprites/FFicons");
         }
 
         public void SetFlowField(FlowField newFlowField)
@@ -108,31 +108,32 @@ namespace Learning.Algorithm.FlowField
             else if (cell.BestDirection == GridDirection.NorthEast)
             {
                 iconSR.sprite = _ffIcons[0];
-                Quaternion newRot = Quaternion.Euler(90, 0, 0);
+                Quaternion newRot = Quaternion.Euler(90, 45, 0);
                 iconGO.transform.rotation = newRot;
             }
             else if (cell.BestDirection == GridDirection.NorthWest)
             {
                 iconSR.sprite = _ffIcons[0];
-                Quaternion newRot = Quaternion.Euler(90, 270, 0);
+                Quaternion newRot = Quaternion.Euler(90, 315, 0);
                 iconGO.transform.rotation = newRot;
             }
             else if (cell.BestDirection == GridDirection.SouthEast)
             {
                 iconSR.sprite = _ffIcons[0];
-                Quaternion newRot = Quaternion.Euler(90, 90, 0);
+                Quaternion newRot = Quaternion.Euler(90, 135, 0);
                 iconGO.transform.rotation = newRot;
             }
             else if (cell.BestDirection == GridDirection.SouthWest)
             {
                 iconSR.sprite = _ffIcons[0];
-                Quaternion newRot = Quaternion.Euler(90, 180, 0);
+                Quaternion newRot = Quaternion.Euler(90, 225, 0);
                 iconGO.transform.rotation = newRot;
             }
             else
             {
                 iconSR.sprite = _ffIcons[0];
             }
+            iconSR.color = new Color(iconSR.color.r, iconSR.color.g, iconSR.color.b, 0.5f);
         }
 
         public void ClearCellDisplay()
