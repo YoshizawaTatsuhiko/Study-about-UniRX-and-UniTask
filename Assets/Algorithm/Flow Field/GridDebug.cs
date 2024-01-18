@@ -3,8 +3,6 @@ using UnityEngine;
 
 namespace Learning.Algorithm.FlowField
 {
-    public enum FlowFieldDisplayType { None, AllIcons, DestinationIcon, CostField, IntegrationField };
-
     public class GridDebug : MonoBehaviour
     {
         [SerializeField] private GridController _gridController;
@@ -15,11 +13,6 @@ namespace Learning.Algorithm.FlowField
         private Vector2Int _gridSize;
         private float _cellRadius;
         private FlowField _curFlowField;
-
-        private void Start()
-        {
-            //_ffIcons = Resources.LoadAll<Sprite>("Sprites/FFicons");
-        }
 
         public void SetFlowField(FlowField newFlowField)
         {
@@ -50,6 +43,7 @@ namespace Learning.Algorithm.FlowField
         private void DisplayAllCells()
         {
             if (_curFlowField == null) { return; }
+
             foreach (Cell curCell in _curFlowField.Grid)
             {
                 DisplayCell(curCell);
@@ -140,7 +134,7 @@ namespace Learning.Algorithm.FlowField
         {
             foreach (Transform t in transform)
             {
-                GameObject.Destroy(t.gameObject);
+                Destroy(t.gameObject);
             }
         }
 
@@ -190,6 +184,7 @@ namespace Learning.Algorithm.FlowField
         private void DrawGrid(Vector2Int drawGridSize, Color drawColor, float drawCellRadius)
         {
             Gizmos.color = drawColor;
+
             for (int x = 0; x < drawGridSize.x; x++)
             {
                 for (int y = 0; y < drawGridSize.y; y++)
@@ -206,4 +201,14 @@ namespace Learning.Algorithm.FlowField
             }
         }
     }
+
+    /// <summary>どのDebugModeでデバッグするか</summary>
+    public enum FlowFieldDisplayType
+    {
+        None,
+        AllIcons,
+        DestinationIcon,
+        CostField,
+        IntegrationField,
+    };
 }
